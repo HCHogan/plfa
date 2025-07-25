@@ -79,6 +79,8 @@ Write out `7` in longhand.
 
 ```agda
 -- Your code goes here
+seven : ℕ
+seven = suc (suc (suc (suc (suc (suc (suc zero))))))
 ```
 
 You will need to give both a type signature and definition for the
@@ -439,7 +441,25 @@ other word for evidence, which we will use interchangeably, is _proof_.
 Compute `3 + 4`, writing out your reasoning as a chain of equations, using the equations for `+`.
 
 ```agda
--- Your code goes here
+_ : 3 + 4 ≡ 7
+_ =
+  begin
+    3 + 4
+  ≡⟨⟩
+    suc 2 + suc 3
+  ≡⟨⟩
+    suc (2 + suc 3)
+  ≡⟨⟩
+    suc (suc 1 + suc 3)
+  ≡⟨⟩
+    suc (suc (1 + suc 3))
+  ≡⟨⟩
+    suc (suc (suc (0 + suc 3)))
+  ≡⟨⟩
+    suc (suc (suc (suc 3)))
+  ≡⟨⟩
+    7
+  ∎
 ```
 
 
@@ -501,7 +521,18 @@ Compute `3 * 4`, writing out your reasoning as a chain of equations, using the e
 (You do not need to step through the evaluation of `+`.)
 
 ```agda
--- Your code goes here
+_ =
+  begin
+    3 * 4
+  ≡⟨⟩
+    4 + (2 * 4)
+  ≡⟨⟩
+    4 + (4 + (1 * 4))
+  ≡⟨⟩
+    4 + (4 + (4 + (0 * 4)))
+  ≡⟨⟩
+    4 + (4 + (4))
+  ∎
 ```
 
 
@@ -515,7 +546,27 @@ Define exponentiation, which is given by the following equations:
 Check that `3 ^ 4` is `81`.
 
 ```agda
--- Your code goes here
+
+_^_ : ℕ → ℕ → ℕ
+m ^ 0 = 1
+m ^ (suc n) = m * (m ^ n)
+
+_ = 
+  begin
+    3 ^ 4
+  ≡⟨⟩
+    3 * (3 ^ 3)
+  ≡⟨⟩
+    3 * (3 * (3 ^ 2))
+  ≡⟨⟩
+    3 * (3 * (3 * (3 ^ 1)))
+  ≡⟨⟩
+    3 * (3 * (3 * (3 * (3 ^ 0))))
+  ≡⟨⟩
+    3 * (3 * (3 * (3 * 1)))
+  ≡⟨⟩
+    81
+  ∎
 ```
 
 
@@ -598,7 +649,31 @@ Section [Logical Connectives](/Decidable/#logical-connectives).
 Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equations.
 
 ```agda
--- Your code goes here
+_ =
+  begin
+    5 ∸ 3
+  ≡⟨⟩
+    4 ∸ 2
+  ≡⟨⟩
+    3 ∸ 1
+  ≡⟨⟩
+    2 ∸ 0
+  ≡⟨⟩
+    2
+  ∎
+
+_ =
+  begin
+    3 ∸ 5
+  ≡⟨⟩
+    2 ∸ 4
+  ≡⟨⟩
+    1 ∸ 3
+  ≡⟨⟩
+    0 ∸ 2
+  ≡⟨⟩
+    0
+  ∎
 ```
 
 
@@ -949,7 +1024,31 @@ represents a positive natural, and represent zero by `⟨⟩ O`.
 Confirm that these both give the correct answer for zero through four.
 
 ```agda
--- Your code goes here
+inc : Bin → Bin
+inc (n O) = n I
+inc (n I) = (inc n) O
+inc (⟨⟩) = ⟨⟩ I
+
+to : ℕ → Bin
+to (zero) = ⟨⟩
+to (suc n) = inc (to n)
+
+from : Bin → ℕ
+from (⟨⟩) = zero
+from (n O) = 2 * from n
+from (n I) = 2 * from n + 1
+
+0equals0 : from (⟨⟩ O) ≡ 0
+0equals0 = refl
+
+1equals1 : from (⟨⟩ I) ≡ 1
+1equals1 = refl
+
+2equals2 : from (⟨⟩ I O) ≡ 2
+2equals2 = refl
+
+3equals3 : from (⟨⟩ I I) ≡ 3
+3equals3 = refl
 ```
 
 
