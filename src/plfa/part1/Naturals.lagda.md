@@ -1049,6 +1049,24 @@ from (n I) = 2 * from n + 1
 
 3equals3 : from (⟨⟩ I I) ≡ 3
 3equals3 = refl
+
+4equals4 : from (⟨⟩ I O O) ≡ 4
+4equals4 = refl
+
+4equals4' : to 4 ≡ ⟨⟩ I O O
+4equals4' = refl
+
+data _≡₂_ {A : Set} : A → A → Set where
+  refl₂ : ∀ {x} → _≡₂_ x x
+
+to'   : {A : Set} {x y : A} → x ≡ y  → _≡₂_ x y
+to' refl = refl₂
+
+from' : {A : Set} {x y : A} → _≡₂_ x y → x ≡ y
+from' refl₂ = refl
+
+-- _ : (to' 1 ≡ 1) ≡ (1 ≡₂ 1)
+-- _ = refl
 ```
 
 
